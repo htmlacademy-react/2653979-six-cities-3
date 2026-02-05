@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Vadim Voronin](https://up.htmlacademy.ru/react-individual/3/user/2653979).
-* Наставник: `Неизвестно`.
+* Наставник: [Антон Ткачук] (https://htmlacademy.ru/profile/id2397393).
 
 ---
 
