@@ -56,16 +56,7 @@ function MainPage({ cartView, offerCount, cities }: MainPageProps): JSX.Element 
                 {cards.map((cart) => (
                   <Cart
                     key={cart.id}
-                    id={cart.id}
-                    title={cart.title}
-                    type={cart.type}
-                    price={cart.price}
-                    isFavorite={cart.isFavorite}
-                    isPremium={cart.isPremium}
-                    rating={cart.rating}
-                    previewImage={cart.previewImage}
-                    city={cart.city}
-                    location={cart.location}
+                    data={cart}
                   />
                 ))}
               </div>
