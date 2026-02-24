@@ -1,19 +1,23 @@
-import Cart from '../../components/cart/cart';
+import Card from '../../components/card/card';
 import { mockOffer } from '../../mock/mock-offer';
+import { Helmet } from 'react-helmet-async';
 
 import Header from '../../components/header/header';
 
 type MainPageProps = {
-  cartView: number;
+  cardView: number;
   offerCount: number;
   cities: string[];
 }
 
-function MainPage({ cartView, offerCount, cities }: MainPageProps): JSX.Element {
-  const cards = mockOffer.slice(0, cartView);
+function MainPage({ cardView, offerCount, cities }: MainPageProps): JSX.Element {
+  const cards = mockOffer.slice(0, cardView);
   return (
     <div className="page page--gray page--main">
-      <Header/>
+      <Helmet>
+        <title>6 Cities</title>
+      </Helmet>
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -53,10 +57,10 @@ function MainPage({ cartView, offerCount, cities }: MainPageProps): JSX.Element 
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                {cards.map((cart) => (
-                  <Cart
-                    key={cart.id}
-                    data={cart}
+                {cards.map((card) => (
+                  <Card
+                    key={card.id}
+                    data={card}
                   />
                 ))}
               </div>
