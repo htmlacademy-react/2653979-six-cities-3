@@ -5,6 +5,7 @@ import App from './components/app/app';
 import { CARD_VIEW, CITIES } from './const';
 
 import { getRandomNumber } from './utils/utils';
+import { mockOffer } from './mock/mock-offer';
 
 const Settings = {
   CardView: CARD_VIEW,
@@ -22,6 +23,7 @@ root.render(
       cardView={Settings.CardView}
       offerCount={Settings.OfferCount}
       cities={Settings.Cities}
+      offers={mockOffer}
     />
   </React.StrictMode>
 );

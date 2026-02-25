@@ -1,23 +1,27 @@
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 
 type OfferCardProps = {
-data: Offer;
+  data: Offer;
+  onMouseEnter: () => void;
 }
 
-function Card({ data }: OfferCardProps): JSX.Element {
-  const {isPremium, rating, previewImage, price, isFavorite, type, title} = data;
+function Card({ data, onMouseEnter }: OfferCardProps): JSX.Element {
+  const { isPremium, rating, previewImage, price, isFavorite, type, title, id } = data;
   const ratingStars = `${rating * 20}%`;
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card"
+      onMouseEnter={onMouseEnter}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`offer/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -45,7 +49,7 @@ function Card({ data }: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
