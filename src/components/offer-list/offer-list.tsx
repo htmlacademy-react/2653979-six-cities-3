@@ -22,8 +22,8 @@ function OfferList({ cardView, offers }: OfferListProps): JSX.Element {
     <div className="cities__places-list places__list tabs__content">
       {cards.map((card) => (
         < Card
-          onMouseEnter={() => handleCardHover(card.id)}
           key={card.id}
+          onMouseEnter={() => handleCardHover(card.id)}
           data={card}
         />
       ))}
