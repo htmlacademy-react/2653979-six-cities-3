@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 
 type OfferCardProps = {
   data: Offer;
-  onMouseEnter: () => void;
+  onMouseEnter?: () => void;
 }
 
 function Card({ data, onMouseEnter }: OfferCardProps): JSX.Element {
