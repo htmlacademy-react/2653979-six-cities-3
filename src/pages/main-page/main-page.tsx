@@ -1,17 +1,18 @@
-import Card from '../../components/card/card';
-import { mockOffer } from '../../mock/mock-offer';
 import { Helmet } from 'react-helmet-async';
 
 import Header from '../../components/header/header';
+import OfferList from '../../components/offer-list/offer-list';
+import { Offer } from '../../types/offer';
+import { City } from '../../types/city';
 
 type MainPageProps = {
   cardView: number;
   offerCount: number;
-  cities: string[];
+  cities: City[];
+  offers: Offer[];
 }
 
-function MainPage({ cardView, offerCount, cities }: MainPageProps): JSX.Element {
-  const cards = mockOffer.slice(0, cardView);
+function MainPage({ cardView, offerCount, cities, offers }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -25,9 +26,9 @@ function MainPage({ cardView, offerCount, cities }: MainPageProps): JSX.Element 
             <ul className="locations__list tabs__list">
               {cities.map((city, index) =>
                 city && (
-                  <li className="locations__item" key={city}>
+                  <li className="locations__item" key={city.name}>
                     <a className={`locations__item-link tabs__item ${index === 0 ? 'tabs__item--active' : ''}`} href="#">
-                      <span>{city}</span>
+                      <span>{city.name}</span>
                     </a>
                   </li>
                 )
@@ -55,15 +56,7 @@ function MainPage({ cardView, offerCount, cities }: MainPageProps): JSX.Element 
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-
-                {cards.map((card) => (
-                  <Card
-                    key={card.id}
-                    data={card}
-                  />
-                ))}
-              </div>
+              <OfferList cardView={cardView} offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

@@ -6,15 +6,19 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {HelmetProvider} from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
+import { Offer } from '../../types/offer';
+import { City } from '../../types/city';
+import { CARD_OTHER_VIEW } from '../../const';
 
 type AppProps = {
   cardView: number;
   offerCount: number;
-  cities: string[];
+  cities: City[];
+  offers: Offer[];
 }
 
-function App({ cardView, offerCount, cities }: AppProps): JSX.Element {
+function App({ cardView, offerCount, cities, offers }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -22,7 +26,7 @@ function App({ cardView, offerCount, cities }: AppProps): JSX.Element {
           <Route
             index
             path={APP_ROUTE.Root}
-            element={<MainPage cardView={cardView} offerCount={offerCount} cities={cities} />}
+            element={<MainPage cardView={cardView} offerCount={offerCount} cities={cities} offers={offers} />}
           />
           <Route
             path={APP_ROUTE.Login}
@@ -32,15 +36,15 @@ function App({ cardView, offerCount, cities }: AppProps): JSX.Element {
             path={APP_ROUTE.Favorites}
             element={
               <PrivateRoute
-                autorizationStatus={AuthorizationStatus.NoAuth}
+                autorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesPage />
+                <FavoritesPage offers={offers}/>
               </PrivateRoute>
             }
           />
           <Route
             path={APP_ROUTE.Offer}
-            element={<OfferPage />}
+            element={<OfferPage offers={offers} cardOtherView={CARD_OTHER_VIEW} />}
           />
           <Route
             path='*'
