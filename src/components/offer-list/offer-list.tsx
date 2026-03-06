@@ -1,20 +1,15 @@
-import { useState } from 'react';
 import Card from '../../components/card/card';
 import { Offer } from '../../types/offer';
+import { CARD_MODE } from '../../const';
+
 type OfferListProps = {
   cardView: number;
   offers: Offer[];
+  onMouseEnter: (cardId: string) => void;
+  onMouseLeave: () => void;
 }
 
-function OfferList({ cardView, offers }: OfferListProps): JSX.Element {
-  const [activeCardId, setActiveCardId] = useState<string | null>(null);
-  const handleCardHover = (cardId: string) => {
-    setActiveCardId(cardId);
-
-    // eslint-disable-next-line no-console
-    console.log(activeCardId);
-
-  };
+function OfferList({ cardView, offers, onMouseEnter, onMouseLeave }: OfferListProps): JSX.Element {
 
 
   const cards = offers.slice(0, cardView);
@@ -23,8 +18,10 @@ function OfferList({ cardView, offers }: OfferListProps): JSX.Element {
       {cards.map((card) => (
         < Card
           key={card.id}
-          onMouseEnter={() => handleCardHover(card.id)}
           data={card}
+          mode={CARD_MODE.VERTICAL}
+          onMouseEnter={() => onMouseEnter(card.id)}
+          onMouseLeave={() => onMouseLeave()}
         />
       ))}
     </div>
