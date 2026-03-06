@@ -1,29 +1,43 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
+import { CARD_MODE } from '../../const';
+
+type CardMode = typeof CARD_MODE[keyof typeof CARD_MODE];
 
 type OfferCardProps = {
   data: Offer;
+  mode: CardMode;
   onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-function Card({ data, onMouseEnter }: OfferCardProps): JSX.Element {
+function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.Element {
   const { isPremium, rating, previewImage, price, isFavorite, type, title, id } = data;
   const ratingStars = `${rating * 20}%`;
+
+  const modeClasses = {
+    [CARD_MODE.VERTICAL]: 'cities',
+    [CARD_MODE.HORIZONTAL]: 'favorites',
+  };
+
+  const cardMode = modeClasses[mode] || 'cities';
+
   return (
-    <article className="cities__card place-card"
+    <article className={`${`${cardMode }__card`} place-card`}
       onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${`${cardMode }__image-wrapper`} place-card__image-wrapper`}>
         <Link to={`offer/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width={cardMode === 'cities' ? '260' : '150'} height={cardMode === 'cities' ? '200' : '110'} alt="Place image" />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={cardMode === 'favorites' ? 'favorites__card-info place-card__info' : 'place-card__info'}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>

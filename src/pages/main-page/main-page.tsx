@@ -1,9 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 
 import Header from '../../components/header/header';
+import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
+
+import { useState } from 'react';
 
 type MainPageProps = {
   cardView: number;
@@ -13,6 +16,19 @@ type MainPageProps = {
 }
 
 function MainPage({ cardView, offerCount, cities, offers }: MainPageProps): JSX.Element {
+  const currentCity = cities[3];
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+  const handleCardHover = (cardId: string) => {
+    setActiveCardId(cardId);
+
+    // eslint-disable-next-line no-console
+    console.log(activeCardId);
+
+  };
+  const handleCardLeave = () => {
+    setActiveCardId(null);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -40,7 +56,7 @@ function MainPage({ cardView, offerCount, cities, offers }: MainPageProps): JSX.
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offerCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offerCount} places to stay in {currentCity.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -56,11 +72,17 @@ function MainPage({ cardView, offerCount, cities, offers }: MainPageProps): JSX.
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList cardView={cardView} offers={offers}/>
+              <OfferList
+                cardView={cardView}
+                offers={offers}
+                onMouseEnter={handleCardHover}
+                onMouseLeave={handleCardLeave}
+              />
             </section>
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
+            <Map
+              city={currentCity}
+              offers={offers}
+            />
           </div>
         </div>
       </main>
