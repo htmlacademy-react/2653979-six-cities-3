@@ -5,6 +5,7 @@ import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
+import { MAP_TYPE } from '../../const';
 
 import { useState } from 'react';
 
@@ -82,6 +83,7 @@ function MainPage({ cardView, offerCount, cities, offers }: MainPageProps): JSX.
             <Map
               city={currentCity}
               offers={offers}
+              type={MAP_TYPE.MAINPAGE}
             />
           </div>
         </div>

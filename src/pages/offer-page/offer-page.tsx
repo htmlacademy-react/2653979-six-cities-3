@@ -5,14 +5,17 @@ import OfferOther from '../../components/offer-other/offer-other';
 import { Helmet } from 'react-helmet-async';
 import { Offer } from '../../types/offer';
 import { useParams, Navigate } from 'react-router-dom';
-import { APP_ROUTE } from '../../const';
+import { APP_ROUTE, MAP_TYPE } from '../../const';
+import { Review } from '../../types/review';
+import Map from '../../components/map/map';
 
 type OfferPageProps = {
   offers: Offer[];
   cardOtherView: number;
+  reviews: Review[];
 }
 
-function OfferPage({ offers, cardOtherView }: OfferPageProps): JSX.Element {
+function OfferPage({ offers, cardOtherView, reviews }: OfferPageProps): JSX.Element {
   const params = useParams();
   const offer = offers.find((off) => off.id === params.id);
   if (!offer) {
@@ -29,8 +32,15 @@ function OfferPage({ offers, cardOtherView }: OfferPageProps): JSX.Element {
           {offer.images.length > 0 && (
             <OfferGallery offerGallery={offer.images} />
           )}
-          <OfferWrapper offerData={offer} />
-          <section className="offer__map map"></section>
+          <OfferWrapper
+            offerData={offer}
+            rewiews={reviews}
+          />
+          <Map
+            city={offer.city}
+            offers={offers}
+            type={MAP_TYPE.OFFERPAGE}
+          />
         </section>
         <OfferOther
           cardOtherView={cardOtherView}

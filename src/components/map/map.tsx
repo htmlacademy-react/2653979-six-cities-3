@@ -7,9 +7,10 @@ import { useRef, useEffect } from 'react';
 type MapProps = {
   city: City;
   offers: Offer[];
+  type: string;
 }
 
-function Map({ city, offers }: MapProps): JSX.Element {
+function Map({ city, offers, type }: MapProps): JSX.Element {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
@@ -49,7 +50,7 @@ function Map({ city, offers }: MapProps): JSX.Element {
   return (
     <div className="cities__right-section">
       <section
-        className="cities__map map"
+        className={`${type } map`}
         style={{ height: '500px' }}
         ref={mapRef}
       >
