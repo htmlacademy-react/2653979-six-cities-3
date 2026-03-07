@@ -3,13 +3,31 @@ import { Offer } from '../../types/offer';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
+import pin from '../../../markup/img/pin.svg';
+import pinActive from '../../../markup/img/pin-active.svg';
+import { MAP_TYPE } from '../../const';
+
+const defaultIcon = leaflet.icon({
+  iconUrl: pin,
+  iconSize: [27, 39],
+  iconAnchor: [14, 39],
+});
+
+const currentIcon = leaflet.icon({
+  iconUrl: pinActive,
+  iconSize: [27, 39],
+  iconAnchor: [14, 39],
+});
 
 type MapProps = {
   city: City;
   offers: Offer[];
+  type: string;
+  activeOffer: string | null;
+  allowHover?: boolean;
 }
 
-function Map({ city, offers }: MapProps): JSX.Element {
+function Map({ city, offers, type, activeOffer, allowHover = true }: MapProps): JSX.Element {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
@@ -31,25 +49,36 @@ function Map({ city, offers }: MapProps): JSX.Element {
 
 
   useEffect(() => {
-    if (!mapInstanceRef.current) {
+    const leafletMap = mapInstanceRef.current;
+
+    if (!leafletMap) {
       return;
     }
 
-    const map = mapInstanceRef.current;
+    const markers: leaflet.Marker[] = offers.map((offer) => {
+      let icon;
 
-    const markers = offers.map((offer) =>
-      leaflet.marker([offer.location.latitude, offer.location.longitude]).addTo(map),
-    );
+      if (type === MAP_TYPE.OFFERPAGE) {
+        icon = currentIcon;
+      } else {
+        icon = allowHover && offer.id === activeOffer ? currentIcon : defaultIcon;
+      }
+
+      return leaflet.marker(
+        [offer.location.latitude, offer.location.longitude],
+        { icon }
+      ).addTo(leafletMap);
+    });
 
     return () => {
       markers.forEach((marker) => marker.remove());
     };
-  }, [offers]);
+  }, [offers, activeOffer, allowHover, type]);
 
   return (
     <div className="cities__right-section">
       <section
-        className="cities__map map"
+        className={`${type} map`}
         style={{ height: '500px' }}
         ref={mapRef}
       >

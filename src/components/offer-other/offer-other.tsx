@@ -1,5 +1,6 @@
 import Card from '../card/card';
 import { Offer } from '../../types/offer';
+import { CARD_MODE } from '../../const';
 
 type OfferOtherProps = {
   cardOtherView: number;
@@ -17,6 +18,7 @@ function OfferOther({ cardOtherView, offers }: OfferOtherProps): JSX.Element {
             < Card
               key={card.id}
               data={card}
+              mode={CARD_MODE.VERTICAL}
             />
           ))}
         </div>

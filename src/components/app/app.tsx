@@ -10,15 +10,17 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
 import { CARD_OTHER_VIEW } from '../../const';
+import { Review } from '../../types/review';
 
 type AppProps = {
   cardView: number;
   offerCount: number;
   cities: City[];
   offers: Offer[];
+  reviews: Review[];
 }
 
-function App({ cardView, offerCount, cities, offers }: AppProps): JSX.Element {
+function App({ cardView, offerCount, cities, offers, reviews }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -38,13 +40,19 @@ function App({ cardView, offerCount, cities, offers }: AppProps): JSX.Element {
               <PrivateRoute
                 autorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesPage offers={offers}/>
+                <FavoritesPage offers={offers} />
               </PrivateRoute>
             }
           />
           <Route
             path={APP_ROUTE.Offer}
-            element={<OfferPage offers={offers} cardOtherView={CARD_OTHER_VIEW} />}
+            element={
+              <OfferPage
+                offers={offers}
+                cardOtherView={CARD_OTHER_VIEW}
+                reviews={reviews}
+              />
+            }
           />
           <Route
             path='*'
