@@ -84,6 +84,7 @@ function MainPage({ cardView, offerCount, cities, offers }: MainPageProps): JSX.
               city={currentCity}
               offers={offers}
               type={MAP_TYPE.MAINPAGE}
+              activeOffer={activeCardId}
             />
           </div>
         </div>

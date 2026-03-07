@@ -38,8 +38,10 @@ function OfferPage({ offers, cardOtherView, reviews }: OfferPageProps): JSX.Elem
           />
           <Map
             city={offer.city}
-            offers={offers}
+            offers={[offer]}
             type={MAP_TYPE.OFFERPAGE}
+            activeOffer={offer.id}
+            allowHover={false}
           />
         </section>
         <OfferOther
