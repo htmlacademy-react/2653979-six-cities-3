@@ -12,6 +12,11 @@ export const CARD_MODE = {
   HORIZONTAL: 'HORIZONTAL',
 } as const;
 
+export const MAP_TYPE = {
+  MAINPAGE: 'cities__map',
+  OFFERPAGE: 'offer__map',
+} as const;
+
 export const CITIES: City[] = [
   {
     name: 'Paris',

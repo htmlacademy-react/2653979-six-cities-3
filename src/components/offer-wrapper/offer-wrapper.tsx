@@ -1,11 +1,13 @@
-import OfferReviews from '../offer-reviews/offer-reviews';
+import OfferReviewsList from '../offer-reviews/offer-reviews-list';
 import { Offer } from '../../types/offer';
+import { Review } from '../../types/review';
 
 type OfferProps = {
   offerData: Offer;
+  rewiews: Review[];
 }
 
-function OfferWrapper({ offerData }: OfferProps): JSX.Element {
+function OfferWrapper({ offerData, rewiews }: OfferProps): JSX.Element {
   const { isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description } = offerData;
   const ratingStars = `${rating * 20}%`;
   return (
@@ -97,7 +99,7 @@ function OfferWrapper({ offerData }: OfferProps): JSX.Element {
             )}
           </div>
         )}
-        <OfferReviews />
+        <OfferReviewsList reviews={rewiews}/>
       </div>
     </div >
   );
