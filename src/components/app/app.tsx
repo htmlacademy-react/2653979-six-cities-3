@@ -8,59 +8,60 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer';
-import { City } from '../../types/city';
 import { CARD_OTHER_VIEW } from '../../const';
 import { Review } from '../../types/review';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
 
 type AppProps = {
   cardView: number;
-  offerCount: number;
-  cities: City[];
   offers: Offer[];
   reviews: Review[];
 }
 
-function App({ cardView, offerCount, cities, offers, reviews }: AppProps): JSX.Element {
+function App({ cardView, offers, reviews }: AppProps): JSX.Element {
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            index
-            path={APP_ROUTE.Root}
-            element={<MainPage cardView={cardView} offerCount={offerCount} cities={cities} offers={offers} />}
-          />
-          <Route
-            path={APP_ROUTE.Login}
-            element={<LoginPage />}
-          />
-          <Route
-            path={APP_ROUTE.Favorites}
-            element={
-              <PrivateRoute
-                autorizationStatus={AuthorizationStatus.Auth}
-              >
-                <FavoritesPage offers={offers} />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={APP_ROUTE.Offer}
-            element={
-              <OfferPage
-                offers={offers}
-                cardOtherView={CARD_OTHER_VIEW}
-                reviews={reviews}
-              />
-            }
-          />
-          <Route
-            path='*'
-            element={<NotFoundPage />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+    <Provider store={store}>
+      <HelmetProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              index
+              path={APP_ROUTE.Root}
+              element={<MainPage cardView={cardView} />}
+            />
+            <Route
+              path={APP_ROUTE.Login}
+              element={<LoginPage />}
+            />
+            <Route
+              path={APP_ROUTE.Favorites}
+              element={
+                <PrivateRoute
+                  autorizationStatus={AuthorizationStatus.Auth}
+                >
+                  <FavoritesPage offers={offers} />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={APP_ROUTE.Offer}
+              element={
+                <OfferPage
+                  offers={offers}
+                  cardOtherView={CARD_OTHER_VIEW}
+                  reviews={reviews}
+                />
+              }
+            />
+            <Route
+              path='*'
+              element={<NotFoundPage />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </HelmetProvider>
+    </Provider>
   );
 }
 
