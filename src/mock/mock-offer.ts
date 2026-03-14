@@ -272,7 +272,7 @@ export const mockOffer: Offer[] = [
     type: 'apartment',
     price: 52,
     city: {
-      name: 'Dusseldorf',
+      name: 'Paris',
       location: {
         latitude: 35.35514457996378,
         longitude: 2.673877537499948,

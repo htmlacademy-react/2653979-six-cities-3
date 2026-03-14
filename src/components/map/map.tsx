@@ -45,7 +45,7 @@ function Map({ city, offers, type, activeOffer, allowHover = true }: MapProps): 
 
       mapInstanceRef.current = map;
     }
-  }, [city]);
+  }, []);
 
 
   useEffect(() => {
@@ -74,6 +74,17 @@ function Map({ city, offers, type, activeOffer, allowHover = true }: MapProps): 
       markers.forEach((marker) => marker.remove());
     };
   }, [offers, activeOffer, allowHover, type]);
+
+  useEffect(() => {
+    const leafletMap = mapInstanceRef.current;
+
+    if (leafletMap) {
+      leafletMap.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom,
+      );
+    }
+  }, [city]);
 
   return (
     <div className="cities__right-section">

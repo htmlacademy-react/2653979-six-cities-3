@@ -1,12 +1,12 @@
 import { Review } from '../../types/review';
 import { getReviewDate } from '../../utils/utils';
 
-type ReviewItemProp = {
+type ReviewItemProps = {
   data: Review;
 }
 
-function OfferReviewsItem({ data }: ReviewItemProp): JSX.Element {
-  const {user, rating, date} = data;
+function OfferReviewItem({ data }: ReviewItemProps): JSX.Element {
+  const {user, rating, date, comment} = data;
   const ratingStars = `${rating * 20}%`;
   return (
     <li className="reviews__item">
@@ -32,7 +32,7 @@ function OfferReviewsItem({ data }: ReviewItemProp): JSX.Element {
           </div>
         </div>
         <p className="reviews__text">
-          A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+          {comment}
         </p>
         <time className="reviews__time" dateTime={date}>{getReviewDate(date)}</time>
       </div>
@@ -40,4 +40,4 @@ function OfferReviewsItem({ data }: ReviewItemProp): JSX.Element {
   );
 }
 
-export default OfferReviewsItem;
+export default OfferReviewItem;
