@@ -5,6 +5,7 @@ export const CARD_OTHER_VIEW: number = 3;
 export const REVIEW_LIMIT = {
   MAX: 300,
   MIN: 50,
+  REVIEWS_COUNT: 10,
 } as const;
 
 export const CARD_MODE = {
@@ -16,6 +17,14 @@ export const MAP_TYPE = {
   MAINPAGE: 'cities__map',
   OFFERPAGE: 'offer__map',
 } as const;
+
+export const SORT_TYPE = {
+  POPULAR: 'Popular',
+  PRICE_LOW_TO_HIGH: 'Price: low to high',
+  PRICE_HIGH_TO_LOW: 'Price: high to low',
+  TOP_RATED: 'Top rated first',
+} as const;
+export type SortType = typeof SORT_TYPE[keyof typeof SORT_TYPE];
 
 export const CITIES: City[] = [
   {
