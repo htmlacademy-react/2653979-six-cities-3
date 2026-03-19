@@ -5,12 +5,10 @@ import { CARD_MODE } from '../../const';
 type OfferListProps = {
   cardView: number;
   offers: Offer[];
-  onMouseEnter: (cardId: string) => void;
-  onMouseLeave: () => void;
+  onActiveCardToggle: (cardId: string | null) => void;
 }
 
-function OfferList({ cardView, offers, onMouseEnter, onMouseLeave }: OfferListProps): JSX.Element {
-
+function OfferList({ cardView, offers, onActiveCardToggle }: OfferListProps): JSX.Element {
 
   const cards = offers.slice(0, cardView);
   return (
@@ -20,8 +18,8 @@ function OfferList({ cardView, offers, onMouseEnter, onMouseLeave }: OfferListPr
           key={card.id}
           data={card}
           mode={CARD_MODE.VERTICAL}
-          onMouseEnter={() => onMouseEnter(card.id)}
-          onMouseLeave={() => onMouseLeave()}
+          onMouseEnter={() => onActiveCardToggle(card.id)}
+          onMouseLeave={() => onActiveCardToggle(null)}
         />
       ))}
     </div>
