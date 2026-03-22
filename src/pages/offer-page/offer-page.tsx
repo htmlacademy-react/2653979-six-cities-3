@@ -3,22 +3,37 @@ import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferWrapper from '../../components/offer-wrapper/offer-wrapper';
 import OfferOther from '../../components/offer-other/offer-other';
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../types/offer';
 import { useParams, Navigate } from 'react-router-dom';
-import { APP_ROUTE, MAP_TYPE } from '../../const';
-import { Review } from '../../types/review';
+import { APP_ROUTE, MAP_TYPE, CARD_OTHER_VIEW } from '../../const';
 import Map from '../../components/map/map';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { getCurrentOffer, getIsCurrentOfferLoading, getNearbyOffers } from '../../store/selectors';
+import { useEffect } from 'react';
+import Spinner from '../../components/spinner/spinner';
+import { fetchCurrentOfferAction, fetchNearbyOffersAction, fetchReviewsAction } from '../../store/api-actions';
 
-type OfferPageProps = {
-  offers: Offer[];
-  cardOtherView: number;
-  reviews: Review[];
-}
+function OfferPage(): JSX.Element {
+  const cardOtherView = CARD_OTHER_VIEW;
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const isCurrentOfferLoading = useAppSelector(getIsCurrentOfferLoading);
 
-function OfferPage({ offers, cardOtherView, reviews }: OfferPageProps): JSX.Element {
-  const params = useParams();
-  const offer = offers.find((off) => off.id === params.id);
-  if (!offer) {
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchCurrentOfferAction(id));
+      dispatch(fetchReviewsAction(id));
+      dispatch(fetchNearbyOffersAction(id));
+    }
+  }, [dispatch, id]);
+
+  if (isCurrentOfferLoading) {
+    return <Spinner />;
+  }
+
+  if (!currentOffer) {
     return <Navigate to={APP_ROUTE.Root} />;
   }
   return (
@@ -29,24 +44,23 @@ function OfferPage({ offers, cardOtherView, reviews }: OfferPageProps): JSX.Elem
       <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
-          {offer.images.length > 0 && (
-            <OfferGallery offerGallery={offer.images} />
+          {currentOffer.images.length > 0 && (
+            <OfferGallery offerGallery={currentOffer.images} />
           )}
           <OfferWrapper
-            offerData={offer}
-            rewiews={reviews}
+            offerData={currentOffer}
           />
           <Map
-            city={offer.city}
-            offers={[offer]}
+            city={currentOffer.city}
+            offers={[currentOffer]}
             type={MAP_TYPE.OFFERPAGE}
-            activeOffer={offer.id}
+            activeOffer={currentOffer.id}
             allowHover={false}
           />
         </section>
         <OfferOther
           cardOtherView={cardOtherView}
-          offers={offers}
+          offers={nearbyOffers}
         />
       </main>
     </div>

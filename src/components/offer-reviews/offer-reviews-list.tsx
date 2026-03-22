@@ -1,17 +1,16 @@
-import { Review } from '../../types/review';
 import OfferReviewItem from './offer-reviews-item';
 import ReviewsForm from './offer-reviews-form';
 import { REVIEW_LIMIT } from '../../const';
+import { useAppSelector } from '../../store';
+import { getReviews } from '../../store/selectors';
 
-type ReviewsListProps = {
-  reviews: Review[];
-}
-
-function OfferReviewsList({ reviews }: ReviewsListProps): JSX.Element {
-  const reviewsView = reviews.slice(0, REVIEW_LIMIT.REVIEWS_COUNT);
+function OfferReviewsList(): JSX.Element {
+  const reviews = useAppSelector(getReviews);
+  const safeReviews = Array.isArray(reviews) ? reviews : [];
+  const reviewsView = safeReviews.slice(0, REVIEW_LIMIT.REVIEWS_COUNT);
   return (
     <section className="offer__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{safeReviews.length}</span></h2>
       <ul className="reviews__list">
         {reviewsView.map((review) => (
           <OfferReviewItem
@@ -20,7 +19,7 @@ function OfferReviewsList({ reviews }: ReviewsListProps): JSX.Element {
           />
         ))}
       </ul>
-      {<ReviewsForm/>};
+      <ReviewsForm />
     </section>
   );
 }

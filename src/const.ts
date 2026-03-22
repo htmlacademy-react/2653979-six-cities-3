@@ -30,25 +30,25 @@ export const CITIES: City[] = [
   {
     name: 'Paris',
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
-      zoom: 16,
+      latitude: 48.8534,
+      longitude: 2.3488,
+      zoom: 13,
     }
   },
   {
     name: 'Cologne',
     location: {
-      latitude: 56.35514938496378,
-      longitude: 2.673877537499948,
-      zoom: 7,
+      latitude: 50.9333,
+      longitude: 6.95,
+      zoom: 13,
     }
   },
   {
     name: 'Brussels',
     location: {
-      latitude: 56.35514457996378,
-      longitude: 2.673877537499948,
-      zoom: 8,
+      latitude: 50.8504,
+      longitude: 4.34878,
+      zoom: 13,
     }
   },
   {
@@ -56,23 +56,23 @@ export const CITIES: City[] = [
     location: {
       latitude: 52.3909553943508,
       longitude: 4.85309666406198,
-      zoom: 11,
+      zoom: 13,
     }
   },
   {
     name: 'Hamburg',
     location: {
-      latitude: 45.35514457996378,
-      longitude: 2.673877537499948,
-      zoom: 8,
+      latitude: 53.5507,
+      longitude: 9.9930,
+      zoom: 13,
     }
   },
   {
     name: 'Dusseldorf',
     location: {
-      latitude: 35.35514457996378,
-      longitude: 2.673877537499948,
-      zoom: 8,
+      latitude: 51.2217,
+      longitude: 6.77616,
+      zoom: 13,
     }
   },
 ];
@@ -89,3 +89,20 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum APIRoute {
+  Offers = '/offers',
+  OfferNearby = '/nearby',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+export const REQUEST_TIMEOUT = 5000;
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export const HEADER_MODE = {
+  AUTH: 'AUTH',
+  NOAUTH: 'NOAUTH',
+  LOGIN: 'LOGIN'
+} as const;

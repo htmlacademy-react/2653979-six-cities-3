@@ -2,14 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './components/app/app';
-import { CARD_VIEW } from './const';
 
-import { mockOffer } from './mock/mock-offer';
-import { MockReviews } from './mock/mock-reviews';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import { checkAuthAction, fetchOfferAction } from './store/api-actions';
 
-const Settings = {
-  CardView: CARD_VIEW,
-} as const;
+store.dispatch(fetchOfferAction());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,10 +16,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      cardView={Settings.CardView}
-      offers={mockOffer}
-      reviews={MockReviews}
-    />
+    <Provider store={store}>
+      <App/>
+    </Provider>
   </React.StrictMode>
 );

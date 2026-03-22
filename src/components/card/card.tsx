@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { CARD_MODE } from '../../const';
+import { APP_ROUTE, CARD_MODE } from '../../const';
 
 type CardMode = typeof CARD_MODE[keyof typeof CARD_MODE];
 
@@ -33,7 +33,7 @@ function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.E
         </div>
       )}
       <div className={`${`${cardMode }__image-wrapper`} place-card__image-wrapper`}>
-        <Link to={`offer/${id}`}>
+        <Link to={`${APP_ROUTE.Offer.replace(':id', id)}`}>
           <img className="place-card__image" src={previewImage} width={cardMode === 'cities' ? '260' : '150'} height={cardMode === 'cities' ? '200' : '110'} alt="Place image" />
         </Link>
       </div>
@@ -63,7 +63,7 @@ function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.E
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${id}`}>{title}</Link>
+          <Link to={`${APP_ROUTE.Offer.replace(':id', id)}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
