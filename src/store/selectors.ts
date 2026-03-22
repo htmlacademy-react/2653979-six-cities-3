@@ -15,7 +15,7 @@ export const selectOffersByCity = createSelector(
 );
 
 export const selectSortedOffers = createSelector(
-  [selectOffersByCity, (state: RootState, sortType: SortType) => sortType],
+  [selectOffersByCity, (_state: RootState, sortType: SortType) => sortType],
   (offers, sortType) => sortOffers(offers, sortType)
 );
 
