@@ -2,6 +2,10 @@ import Card from '../../components/card/card';
 import { Offer } from '../../types/offer';
 import { CARD_MODE } from '../../const';
 
+import Spinner from '../../components/spinner/spinner';
+import { useAppSelector } from '../../store';
+import { AuthorizationStatus } from '../../const';
+
 type OfferListProps = {
   cardView: number;
   offers: Offer[];
@@ -9,19 +13,27 @@ type OfferListProps = {
 }
 
 function OfferList({ cardView, offers, onActiveCardToggle }: OfferListProps): JSX.Element {
-
   const cards = offers.slice(0, cardView);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersLoading = useAppSelector((state) => state.isOffersDataLoading);
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
+    return (
+      <Spinner/>
+    );
+  }
   return (
     <div className="cities__places-list places__list tabs__content">
-      {cards.map((card) => (
-        < Card
-          key={card.id}
-          data={card}
-          mode={CARD_MODE.VERTICAL}
-          onMouseEnter={() => onActiveCardToggle(card.id)}
-          onMouseLeave={() => onActiveCardToggle(null)}
-        />
-      ))}
+      {
+        cards.map((card) => (
+          < Card
+            key={card.id}
+            data={card}
+            mode={CARD_MODE.VERTICAL}
+            onMouseEnter={() => onActiveCardToggle(card.id)}
+            onMouseLeave={() => onActiveCardToggle(null)}
+          />
+        ))
+      }
     </div>
   );
 }

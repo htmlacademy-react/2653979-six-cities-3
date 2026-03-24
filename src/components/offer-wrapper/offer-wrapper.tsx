@@ -1,15 +1,17 @@
 import OfferReviewsList from '../offer-reviews/offer-reviews-list';
 import { Offer } from '../../types/offer';
-import { Review } from '../../types/review';
+import { useAppSelector } from '../../store';
+import { getAuthorizationStatus } from '../../store/selectors';
+import { AuthorizationStatus } from '../../const';
 
 type OfferProps = {
   offerData: Offer;
-  rewiews: Review[];
 }
 
-function OfferWrapper({ offerData, rewiews }: OfferProps): JSX.Element {
+function OfferWrapper({ offerData }: OfferProps): JSX.Element {
   const { isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description } = offerData;
   const ratingStars = `${rating * 20}%`;
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     <div className="offer__container container">
       <div className="offer__wrapper">
@@ -99,7 +101,8 @@ function OfferWrapper({ offerData, rewiews }: OfferProps): JSX.Element {
             )}
           </div>
         )}
-        <OfferReviewsList reviews={rewiews}/>
+        {authorizationStatus === AuthorizationStatus.Auth && <OfferReviewsList />}
+
       </div>
     </div >
   );

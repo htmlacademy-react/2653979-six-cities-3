@@ -7,8 +7,8 @@ import OfferList from '../../components/offer-list/offer-list';
 import LocationList from './location-list';
 import Sort from './sort';
 import { City } from '../../types/city';
-import { MAP_TYPE, SORT_TYPE, SortType } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../store'; // обновленный импорт
+import { CARD_VIEW, MAP_TYPE, SORT_TYPE, SortType } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { setCity } from '../../store/action';
 import {
   setCity as selectCurrentCity,
@@ -16,11 +16,8 @@ import {
   selectOffersCount
 } from '../../store/selectors';
 
-type MainPageProps = {
-  cardView: number;
-}
-
-function MainPage({ cardView }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
+  const cardView = CARD_VIEW;
   const dispatch = useAppDispatch();
   const [currentSort, setCurrentSort] = useState<SortType>(SORT_TYPE.POPULAR);
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
