@@ -1,4 +1,4 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
@@ -11,10 +11,17 @@ import { getAuthorizationStatus } from '../../store/selectors';
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [passwordError, setPasswordError] = useState('');
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+
+  const validatePassword = (password: string): boolean => {
+    const hasLetter = /[a-zA-Zа-яА-Я]/.test(password);
+    const hasDigit = /\d/.test(password);
+    return hasLetter && hasDigit;
+  };
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -24,10 +31,24 @@ function LoginPage(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      const password = passwordRef.current.value;
+
+      if (!validatePassword(password)) {
+        setPasswordError('Пароль должен содержать минимум одну букву и одну цифру');
+        return;
+      }
+
+      setPasswordError('');
       onSubmit({
         login: loginRef.current.value,
-        password: passwordRef.current.value,
+        password: password,
       });
+    }
+  };
+
+  const handlePasswordChange = () => {
+    if (passwordError) {
+      setPasswordError('');
     }
   };
 
@@ -66,11 +87,23 @@ function LoginPage(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  onChange={handlePasswordChange}
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">
                 Sign in
               </button>
+              {passwordError && (
+                <div style={{
+                  color: 'red',
+                  fontSize: '12px',
+                  marginTop: '5px',
+                  position: 'absolute'
+                }}
+                >
+                  {passwordError}
+                </div>
+              )}
             </form>
           </section>
           <section className="locations locations--login locations--current">

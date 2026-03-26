@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Header from '../../components/header/header';
@@ -15,10 +15,15 @@ import {
   selectSortedOffers,
   selectOffersCount
 } from '../../store/selectors';
+import { fetchOffersAction } from '../../store/api-actions';
 
 function MainPage(): JSX.Element {
   const cardView = CARD_VIEW;
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
+
   const [currentSort, setCurrentSort] = useState<SortType>(SORT_TYPE.POPULAR);
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
