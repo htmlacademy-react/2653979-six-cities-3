@@ -67,7 +67,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.nearbyOffers = action.payload;
     })
     .addCase(setReviews, (state, action) => {
-      state.reviews = Array.isArray(action.payload) ? action.payload : [];
+      state.reviews = action.payload;
     })
     .addCase(setCurrentOfferLoadStatus, (state, action) => {
       state.isCurrentOfferLoading = action.payload;
