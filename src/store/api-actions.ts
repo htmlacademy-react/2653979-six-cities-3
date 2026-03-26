@@ -11,7 +11,7 @@ import { UserData } from '../types/user-data';
 import { Review, ReviewPost } from '../types/review';
 import { AxiosError } from 'axios';
 
-export const fetchOfferAction = createAsyncThunk<void, undefined, {
+export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;

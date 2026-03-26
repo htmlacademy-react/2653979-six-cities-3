@@ -7,18 +7,13 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { fetchOfferAction } from '../../store/api-actions';
-import { useEffect } from 'react';
+import { store, useAppSelector } from '../../store';
 import { getAuthorizationStatus } from '../../store/selectors';
+import { checkAuthAction } from '../../store/api-actions';
+
+store.dispatch(checkAuthAction());
 
 function App(): JSX.Element {
-
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchOfferAction());
-  }, [dispatch]);
-
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     <HelmetProvider>
