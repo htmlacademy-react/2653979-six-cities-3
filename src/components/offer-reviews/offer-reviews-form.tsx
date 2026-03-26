@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, Fragment } from 'react';
 import { REVIEW_LIMIT } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { postReviewAction } from '../../store/api-actions';
@@ -8,6 +8,20 @@ type FormData = {
   rating: number | null;
   review: string;
 }
+
+type RatingOption = {
+  value: number;
+  title: string;
+  id: string;
+}
+
+const RATING_OPTIONS: RatingOption[] = [
+  { value: 5, title: 'perfect', id: '5-stars' },
+  { value: 4, title: 'good', id: '4-stars' },
+  { value: 3, title: 'not bad', id: '3-stars' },
+  { value: 2, title: 'badly', id: '2-stars' },
+  { value: 1, title: 'terribly', id: '1-star' },
+];
 
 function ReviewsForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -30,32 +44,36 @@ function ReviewsForm(): JSX.Element {
     }
   };
 
+  const onSubmit = () => {
+    if (currentOffer && formData.rating) {
+      dispatch(postReviewAction({
+        offerId: currentOffer.id,
+        review: {
+          comment: formData.review,
+          rating: formData.rating,
+        }
+      })).unwrap()
+        .then(() => {
+          setFormData({
+            rating: null,
+            review: '',
+          });
+          setError(null);
+        })
+        .catch(() => {
+          setError('Failed to submit review. Please try again.');
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+    }
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setIsSubmitting(true);
     setError(null);
-    void (async () => {
-      try {
-        if (currentOffer && formData.rating) {
-          await dispatch(postReviewAction({
-            offerId: currentOffer.id,
-            review: {
-              comment: formData.review,
-              rating: formData.rating,
-            }
-          })).unwrap();
-        }
-
-        setFormData({
-          rating: null,
-          review: '',
-        });
-      } catch (err) {
-        setError('Failed to submit review. Please try again.');
-      } finally {
-        setIsSubmitting(false);
-      }
-    })();
+    onSubmit();
   };
 
   const isSubmitDisabled = !formData.rating ||
@@ -81,85 +99,25 @@ function ReviewsForm(): JSX.Element {
       )}
 
       <div className="reviews__rating-form form__rating">
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-          onChange={handleFieldChange}
-          checked={formData.rating === 5}
-          disabled={isSubmitting}
-        />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-          onChange={handleFieldChange}
-          checked={formData.rating === 4}
-          disabled={isSubmitting}
-        />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-          onChange={handleFieldChange}
-          checked={formData.rating === 3}
-          disabled={isSubmitting}
-        />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-          onChange={handleFieldChange}
-          checked={formData.rating === 2}
-          disabled={isSubmitting}
-        />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-          onChange={handleFieldChange}
-          checked={formData.rating === 1}
-          disabled={isSubmitting}
-        />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {RATING_OPTIONS.map(({ value, title, id }) => (
+          <Fragment key={value}>
+            <input
+              className="form__rating-input visually-hidden"
+              name="rating"
+              value={value}
+              id={id}
+              type="radio"
+              onChange={handleFieldChange}
+              checked={formData.rating === value}
+              disabled={isSubmitting}
+            />
+            <label htmlFor={id} className="reviews__rating-label form__rating-label" title={title}>
+              <svg className="form__star-image" width="37" height="33">
+                <use xlinkHref="#icon-star"></use>
+              </svg>
+            </label>
+          </Fragment>
+        ))}
       </div>
 
       <textarea
