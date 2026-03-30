@@ -1,12 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import { reducer } from './reducer';
 import { createAPI } from '../services/api';
+import { userProcess } from './slice/user-process';
+import { appData } from './slice/app-data';
+import { appError } from './slice/app-error';
 
 const api = createAPI();
 
 export const store = configureStore({
-  reducer,
+  reducer: {
+    user: userProcess.reducer,
+    data: appData.reducer,
+    error: appError.reducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {

@@ -1,13 +1,25 @@
 import { City } from '../../types/city';
 import { CITIES } from '../../const';
 import LocationItem from './location-item';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { useEffect } from 'react';
+import { fetchOffersAction } from '../../store/api-actions';
+import { setCity } from '../../store/slice/app-data';
+import { getCity } from '../../store/selectors';
 
-type LocationListProps = {
-  currentCity: City;
-  onCityChange: (city: City) => void;
-}
+function LocationList(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-function LocationList({ currentCity, onCityChange }: LocationListProps): JSX.Element {
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
+
+  const currentCity = useAppSelector(getCity);
+
+  const handleCityChange = (city: City) => {
+    dispatch(setCity(city));
+  };
+
   return (
     <div className="tabs">
       <section className="locations container">
@@ -17,7 +29,7 @@ function LocationList({ currentCity, onCityChange }: LocationListProps): JSX.Ele
               key={city.name}
               city={city}
               isActive={city.name === currentCity.name}
-              onClick={() => onCityChange(city)}
+              onClick={() => handleCityChange(city)}
             />
           ))}
         </ul>

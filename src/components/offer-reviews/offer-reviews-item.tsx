@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Review } from '../../types/review';
 import { getReviewDate } from '../../utils/utils';
 
@@ -40,4 +41,4 @@ function OfferReviewItem({ data }: ReviewItemProps): JSX.Element {
   );
 }
 
-export default OfferReviewItem;
+export default memo(OfferReviewItem);
