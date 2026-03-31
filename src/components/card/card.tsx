@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { APP_ROUTE, CARD_MODE } from '../../const';
+import { APP_ROUTE, AuthorizationStatus, CARD_MODE } from '../../const';
+import { useFavorite } from '../../hooks/use-favorite';
+import { getAuthorizationStatus } from '../../store/selectors';
+import { useAppSelector } from '../../store';
 
 type CardMode = typeof CARD_MODE[keyof typeof CARD_MODE];
 
@@ -14,16 +17,25 @@ type OfferCardProps = {
 function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.Element {
   const { isPremium, rating, previewImage, price, isFavorite, type, title, id } = data;
   const ratingStars = `${rating * 20}%`;
-
   const modeClasses = {
     [CARD_MODE.VERTICAL]: 'cities',
     [CARD_MODE.HORIZONTAL]: 'favorites',
   };
 
+  const { toggleFavorite } = useFavorite();
+
   const cardMode = modeClasses[mode] || 'cities';
 
+  const handleFavoritesClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    toggleFavorite(id, isFavorite).catch(() => {
+    });
+  };
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   return (
-    <article className={`${`${cardMode }__card`} place-card`}
+    <article className={`${`${cardMode}__card`} place-card`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -32,7 +44,7 @@ function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.E
           <span>Premium</span>
         </div>
       )}
-      <div className={`${`${cardMode }__image-wrapper`} place-card__image-wrapper`}>
+      <div className={`${`${cardMode}__image-wrapper`} place-card__image-wrapper`}>
         <Link to={`${APP_ROUTE.Offer.replace(':id', id)}`}>
           <img className="place-card__image" src={previewImage} width={cardMode === 'cities' ? '260' : '150'} height={cardMode === 'cities' ? '200' : '110'} alt="Place image" />
         </Link>
@@ -43,7 +55,10 @@ function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.E
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} type="button">
+          <button
+            onClick={handleFavoritesClick}
+            className={`place-card__bookmark-button button ${isFavorite && isAuth ? 'place-card__bookmark-button--active' : ''}`}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

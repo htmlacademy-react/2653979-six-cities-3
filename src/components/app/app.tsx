@@ -1,5 +1,5 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { APP_ROUTE } from '../../const';
+import { APP_ROUTE, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -9,12 +9,18 @@ import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { store, useAppSelector } from '../../store';
 import { getAuthorizationStatus } from '../../store/selectors';
-import { checkAuthAction } from '../../store/api-actions';
+import { checkAuthAction, fetchFavoriteOffersAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 store.dispatch(checkAuthAction());
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      store.dispatch(fetchFavoriteOffersAction());
+    }
+  }, [authorizationStatus]);
   return (
     <HelmetProvider>
       <BrowserRouter>

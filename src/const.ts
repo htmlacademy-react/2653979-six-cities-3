@@ -106,3 +106,9 @@ export const HEADER_MODE = {
   NOAUTH: 'NOAUTH',
   LOGIN: 'LOGIN'
 } as const;
+
+export enum NameSpace {
+  User = 'USER',
+  Data = 'DATA',
+  Error = 'ERROR',
+}

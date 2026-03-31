@@ -1,14 +1,22 @@
 import OfferReviewsList from '../offer-reviews/offer-reviews-list';
 import { Offer } from '../../types/offer';
+import { useFavorite } from '../../hooks/use-favorite';
 
 type OfferProps = {
   offerData: Offer;
 }
 
 function OfferWrapper({ offerData }: OfferProps): JSX.Element {
-  const { isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description } = offerData;
+  const { isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, id, isFavorite } = offerData;
   const ratingStars = `${rating * 20}%`;
+  const { toggleFavorite } = useFavorite();
 
+  const handleFavoritesClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    toggleFavorite(id, isFavorite).catch(() => {
+    });
+  };
   return (
     <div className="offer__container container">
       <div className="offer__wrapper">
@@ -21,7 +29,9 @@ function OfferWrapper({ offerData }: OfferProps): JSX.Element {
           <h1 className="offer__name">
             {title}
           </h1>
-          <button className="offer__bookmark-button button" type="button">
+          <button className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button"
+            onClick={handleFavoritesClick}
+          >
             <svg className="offer__bookmark-icon" width="31" height="33">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

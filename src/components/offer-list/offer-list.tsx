@@ -14,8 +14,8 @@ type OfferListProps = {
 
 function OfferList({ cardView, offers, onActiveCardToggle }: OfferListProps): JSX.Element {
   const cards = offers.slice(0, cardView);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOffersLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const authorizationStatus = useAppSelector((state) => state.user.authorizationStatus);
+  const isOffersLoading = useAppSelector((state) => state.data.isOffersDataLoading);
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
     return (
       <Spinner/>
