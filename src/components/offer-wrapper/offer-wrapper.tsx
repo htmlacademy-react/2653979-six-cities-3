@@ -13,7 +13,6 @@ function OfferWrapper({ offerData }: OfferProps): JSX.Element {
 
   const handleFavoritesClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    evt.stopPropagation();
     toggleFavorite(id, isFavorite).catch(() => {
     });
   };

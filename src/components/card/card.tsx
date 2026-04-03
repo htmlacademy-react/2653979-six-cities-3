@@ -28,7 +28,6 @@ function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.E
 
   const handleFavoritesClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    evt.stopPropagation();
     toggleFavorite(id, isFavorite).catch(() => {
     });
   };
