@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CARD_VIEW, MAP_TYPE, SORT_TYPE, SortType } from '../../const';
+import { CARD_VIEW, MAP_TYPE, SORT_TYPE, SortType, NameSpace } from '../../const';
 import { useAppSelector } from '../../store';
 import { selectOffersCount, selectSortedOffers, getCity } from '../../store/selectors';
 import Sort from '../../pages/main-page/sort';
@@ -25,7 +25,7 @@ function CardsMap(): JSX.Element {
   const handleSortChange = (sortType: SortType) => {
     setCurrentSort(sortType);
   };
-  const isOffersLoading = useAppSelector((state) => state.data.isOffersDataLoading);
+  const isOffersLoading = useAppSelector((state) => state[NameSpace.Data].isOffersDataLoading);
 
   return (
     <div className="cities">

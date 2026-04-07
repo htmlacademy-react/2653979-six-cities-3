@@ -38,7 +38,6 @@ export const userProcess = createSlice({
       if (!exists) {
         state.favoriteOffers.push(offer);
       } else {
-        // Обновляем существующий
         const index = state.favoriteOffers.findIndex((o) => o.id === offer.id);
         if (index !== -1) {
           state.favoriteOffers[index] = offer;

@@ -1,6 +1,7 @@
 import OfferReviewsList from '../offer-reviews/offer-reviews-list';
 import { Offer } from '../../types/offer';
 import { useFavorite } from '../../hooks/use-favorite';
+import { convertRathingStars } from '../../utils/utils';
 
 type OfferProps = {
   offerData: Offer;
@@ -8,7 +9,7 @@ type OfferProps = {
 
 function OfferWrapper({ offerData }: OfferProps): JSX.Element {
   const { isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, id, isFavorite } = offerData;
-  const ratingStars = `${rating * 20}%`;
+  const ratingStars = convertRathingStars(rating);
   const { toggleFavorite } = useFavorite();
 
   const handleFavoritesClick = (evt: React.MouseEvent<HTMLButtonElement>) => {

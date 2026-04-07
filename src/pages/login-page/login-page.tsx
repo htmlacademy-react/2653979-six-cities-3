@@ -76,6 +76,7 @@ function LoginPage(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
+                  data-testid="emailElement"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -88,18 +89,21 @@ function LoginPage(): JSX.Element {
                   placeholder="Password"
                   required
                   onChange={handlePasswordChange}
+                  data-testid="passwordElement"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">
                 Sign in
               </button>
               {passwordError && (
-                <div style={{
-                  color: 'red',
-                  fontSize: '12px',
-                  marginTop: '5px',
-                  position: 'absolute'
-                }}
+                <div
+                  data-testid="password-error"
+                  style={{
+                    color: 'red',
+                    fontSize: '12px',
+                    marginTop: '5px',
+                    position: 'absolute'
+                  }}
                 >
                   {passwordError}
                 </div>
