@@ -16,9 +16,13 @@ export function sortOffers(offers: Offer[], sortType: string): Offer[] {
     case SORT_TYPE.PRICE_LOW_TO_HIGH:
       return sortedOffers.sort((a, b) => a.price - b.price);
     case SORT_TYPE.TOP_RATED:
-      return sortedOffers.sort((a, b) => a.rating - b.rating);
+      return sortedOffers.sort((b, a) => a.rating - b.rating);
     case SORT_TYPE.POPULAR:
     default:
       return sortedOffers;
   }
+}
+
+export function convertRathingStars (rating: number): string {
+  return `${rating * 20 }%`;
 }

@@ -4,6 +4,7 @@ import { APP_ROUTE, AuthorizationStatus, CARD_MODE } from '../../const';
 import { useFavorite } from '../../hooks/use-favorite';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { useAppSelector } from '../../store';
+import { convertRathingStars } from '../../utils/utils';
 
 type CardMode = typeof CARD_MODE[keyof typeof CARD_MODE];
 
@@ -16,7 +17,7 @@ type OfferCardProps = {
 
 function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.Element {
   const { isPremium, rating, previewImage, price, isFavorite, type, title, id } = data;
-  const ratingStars = `${rating * 20}%`;
+  const ratingStars = convertRathingStars(rating);
   const modeClasses = {
     [CARD_MODE.VERTICAL]: 'cities',
     [CARD_MODE.HORIZONTAL]: 'favorites',
@@ -37,6 +38,7 @@ function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.E
     <article className={`${`${cardMode}__card`} place-card`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      data-testid="card-container"
     >
       {isPremium && (
         <div className="place-card__mark">

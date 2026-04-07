@@ -1,6 +1,6 @@
 import Card from '../../components/card/card';
 import { Offer } from '../../types/offer';
-import { CARD_MODE } from '../../const';
+import { CARD_MODE, NameSpace } from '../../const';
 
 import Spinner from '../../components/spinner/spinner';
 import { useAppSelector } from '../../store';
@@ -14,8 +14,8 @@ type OfferListProps = {
 
 function OfferList({ cardView, offers, onActiveCardToggle }: OfferListProps): JSX.Element {
   const cards = offers.slice(0, cardView);
-  const authorizationStatus = useAppSelector((state) => state.user.authorizationStatus);
-  const isOffersLoading = useAppSelector((state) => state.data.isOffersDataLoading);
+  const authorizationStatus = useAppSelector((state) => state[NameSpace.User].authorizationStatus);
+  const isOffersLoading = useAppSelector((state) => state[NameSpace.Data].isOffersDataLoading);
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
     return (
       <Spinner/>

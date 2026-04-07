@@ -1,4 +1,4 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { APP_ROUTE, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -12,10 +12,13 @@ import { getAuthorizationStatus } from '../../store/selectors';
 import { checkAuthAction, fetchFavoriteOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 
-store.dispatch(checkAuthAction());
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  useEffect(() => {
+    store.dispatch(checkAuthAction());
+  }, []);
+
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       store.dispatch(fetchFavoriteOffersAction());
@@ -23,37 +26,36 @@ function App(): JSX.Element {
   }, [authorizationStatus]);
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            index
-            path={APP_ROUTE.Root}
-            element={<MainPage />}
-          />
-          <Route
-            path={APP_ROUTE.Login}
-            element={<LoginPage />}
-          />
-          <Route
-            path={APP_ROUTE.Favorites}
-            element={
-              <PrivateRoute
-                autorizationStatus={authorizationStatus}
-              >
-                <FavoritesPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={APP_ROUTE.Offer}
-            element={<OfferPage />}
-          />
-          <Route
-            path='*'
-            element={<NotFoundPage />}
-          />
-        </Routes>
-      </BrowserRouter>
+      {/* <BrowserRouter> */}
+      <Routes>
+        <Route
+          index
+          path={APP_ROUTE.Root}
+          element={<MainPage />}
+        />
+        <Route
+          path={APP_ROUTE.Login}
+          element={<LoginPage />}
+        />
+        <Route
+          path={APP_ROUTE.Favorites}
+          element={
+            <PrivateRoute
+              autorizationStatus={authorizationStatus}
+            >
+              <FavoritesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={APP_ROUTE.Offer}
+          element={<OfferPage />}
+        />
+        <Route
+          path='*'
+          element={<NotFoundPage />}
+        />
+      </Routes>
     </HelmetProvider>
   );
 }

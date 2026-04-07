@@ -4,14 +4,15 @@ import { createAPI } from '../services/api';
 import { userProcess } from './slice/user-process';
 import { appData } from './slice/app-data';
 import { appError } from './slice/app-error';
+import { NameSpace } from '../const';
 
 const api = createAPI();
 
 export const store = configureStore({
   reducer: {
-    user: userProcess.reducer,
-    data: appData.reducer,
-    error: appError.reducer,
+    [NameSpace.User]: userProcess.reducer,
+    [NameSpace.Data]: appData.reducer,
+    [NameSpace.Error]: appError.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
