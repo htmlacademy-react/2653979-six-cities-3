@@ -6,7 +6,7 @@ type ReviewItemProps = {
   data: Review;
 }
 
-function OfferReviewItem({ data }: ReviewItemProps): JSX.Element {
+function OfferReviewsItem({ data }: ReviewItemProps): JSX.Element {
   const {user, rating, date, comment} = data;
   const ratingStars = `${rating * 20}%`;
   return (
@@ -41,4 +41,4 @@ function OfferReviewItem({ data }: ReviewItemProps): JSX.Element {
   );
 }
 
-export default memo(OfferReviewItem);
+export default memo(OfferReviewsItem);

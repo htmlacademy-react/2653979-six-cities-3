@@ -1,4 +1,4 @@
-import OfferReviewItem from './offer-reviews-item';
+import OfferReviewsItem from './offer-reviews-item';
 import ReviewsForm from './offer-reviews-form';
 import { AuthorizationStatus, REVIEW_LIMIT } from '../../const';
 import { useAppSelector } from '../../store';
@@ -14,7 +14,7 @@ function OfferReviewsList(): JSX.Element {
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{safeReviews.length}</span></h2>
       <ul className="reviews__list">
         {reviewsView.map((review) => (
-          <OfferReviewItem
+          <OfferReviewsItem
             key={review.id}
             data={review}
           />
