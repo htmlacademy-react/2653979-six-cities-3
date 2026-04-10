@@ -28,7 +28,7 @@ function Sort({ currentSort, onSortChange }: SortProps): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : ''}`}>
+      <ul data-testid="sort-options" className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : ''}`}>
         {sortTypes.map((sortType) => (
           <li
             className={`places__option ${currentSort === sortType ? 'places__option--active' : ''}`}
