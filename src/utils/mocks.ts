@@ -24,7 +24,7 @@ const generateRandomFloat = (min: number, max: number, fractionDigits: number = 
 export const generateRandomBoolean = (): boolean => Math.random() > 0.5;
 
 
-const createMockLocation = (): Location => ({
+export const createMockLocation = (): Location => ({
   latitude: generateLatitude(),
   longitude: generateLongitude(),
   zoom: generateRandomNumber(1, 20),
