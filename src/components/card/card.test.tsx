@@ -51,7 +51,7 @@ function renderCard({
   };
 
   const { withStoreComponent } = withStore(
-    <Card data={offerData} mode={CARD_MODE.VERTICAL} />,
+    <Card data={offerData} mode={CARD_MODE.VERTICAL} isNear={false}/>,
     initialState
   );
 
@@ -113,6 +113,7 @@ describe('Component: Card', () => {
         mode={CARD_MODE.VERTICAL}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        isNear={false}
       />,
       initialState
     );

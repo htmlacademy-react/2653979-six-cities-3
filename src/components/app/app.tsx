@@ -26,7 +26,6 @@ function App(): JSX.Element {
   }, [authorizationStatus]);
   return (
     <HelmetProvider>
-      {/* <BrowserRouter> */}
       <Routes>
         <Route
           index
@@ -52,7 +51,7 @@ function App(): JSX.Element {
           element={<OfferPage />}
         />
         <Route
-          path='*'
+          path={APP_ROUTE.NotFound}
           element={<NotFoundPage />}
         />
       </Routes>

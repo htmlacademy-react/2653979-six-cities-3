@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { APP_ROUTE, AuthorizationStatus } from '../../const';
 import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus, selectFavoriteOffers, getUserEmail } from '../../store/selectors';
+import { useEffect } from 'react';
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,8 +20,13 @@ function Header(): JSX.Element {
   const handleLogout = (evt: React.MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
-    navigate(APP_ROUTE.Login);
   };
+
+  useEffect(() => {
+    if (!isAuth && location.pathname === String(APP_ROUTE.Favorites)) {
+      navigate(APP_ROUTE.Login, { replace: true });
+    }
+  }, [isAuth, location.pathname, navigate]);
 
   if (isLoginPage) {
     return (

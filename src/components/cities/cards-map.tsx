@@ -33,7 +33,7 @@ function CardsMap(): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{offersCount} places to stay in {currentCity.name}</b>
+            <b className="places__found">{offersCount} {offersCount <= 1 ? 'place' : 'places'} to stay in {currentCity.name}</b>
             <Sort
               currentSort={currentSort}
               onSortChange={handleSortChange}

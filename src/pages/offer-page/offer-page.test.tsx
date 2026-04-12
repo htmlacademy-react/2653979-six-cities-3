@@ -164,7 +164,7 @@ describe('OfferPage', () => {
 
     renderPage();
 
-    expect(screen.getByTestId('navigate')).toHaveTextContent(APP_ROUTE.Root);
+    expect(screen.getByTestId('navigate')).toHaveTextContent(APP_ROUTE.NotFound);
   });
 
   it('does not render gallery when images array is empty', () => {

@@ -20,7 +20,7 @@ const RATING_OPTIONS: RatingOption[] = [
   { value: 4, title: 'good', id: '4-stars' },
   { value: 3, title: 'not bad', id: '3-stars' },
   { value: 2, title: 'badly', id: '2-stars' },
-  { value: 1, title: 'terribly', id: '1-star' },
+  { value: 1, title: 'terribly', id: '1-stars' },
 ];
 
 function ReviewsForm(): JSX.Element {

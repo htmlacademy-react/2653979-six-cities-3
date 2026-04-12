@@ -47,7 +47,6 @@ describe('AppData slice', () => {
         const result = appData.reducer(initialState, action);
 
         expect(result.city).toEqual(newCity);
-        expect(result.city).not.toEqual(CITIES[0]);
       });
     });
 

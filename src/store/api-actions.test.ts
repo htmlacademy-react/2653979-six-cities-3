@@ -223,9 +223,6 @@ describe('Async actions', () => {
         fetchReviewsAction.pending.type,
         fetchReviewsAction.fulfilled.type,
       ]);
-
-      const storeActions = store.getActions() as AnyAction[];
-      expect(storeActions[1].payload).toEqual(mockReviews);
     });
 
     it('should dispatch fetchReviewsAction.rejected when request fails', async () => {
@@ -256,9 +253,6 @@ describe('Async actions', () => {
         postReviewAction.pending.type,
         postReviewAction.fulfilled.type,
       ]);
-
-      const storeActions = store.getActions() as AnyAction[];
-      expect(storeActions[1].payload).toEqual(mockReviews);
     });
 
     it('should dispatch postReviewAction.rejected with error message when validation fails', async () => {

@@ -31,7 +31,6 @@ function Map({ city, offers, type, activeOffer, allowHover = true }: MapProps): 
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
-
   useEffect(() => {
     if (mapRef.current !== null && mapInstanceRef.current === null) {
       const map = leaflet.map(mapRef.current).setView(
@@ -47,7 +46,6 @@ function Map({ city, offers, type, activeOffer, allowHover = true }: MapProps): 
     }
   }, []);
 
-
   useEffect(() => {
     const leafletMap = mapInstanceRef.current;
 
@@ -57,9 +55,8 @@ function Map({ city, offers, type, activeOffer, allowHover = true }: MapProps): 
 
     const markers: leaflet.Marker[] = offers.map((offer) => {
       let icon;
-
       if (type === MAP_TYPE.OFFERPAGE) {
-        icon = currentIcon;
+        icon = offer.id === activeOffer ? currentIcon : defaultIcon;
       } else {
         icon = allowHover && offer.id === activeOffer ? currentIcon : defaultIcon;
       }

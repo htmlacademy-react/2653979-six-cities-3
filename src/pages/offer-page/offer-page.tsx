@@ -34,8 +34,9 @@ function OfferPage(): JSX.Element {
   }
 
   if (!currentOffer) {
-    return <Navigate to={APP_ROUTE.Root} />;
+    return <Navigate to={APP_ROUTE.NotFound} />;
   }
+
   return (
     <div className="page">
       <Helmet>
@@ -52,10 +53,10 @@ function OfferPage(): JSX.Element {
           />
           <Map
             city={currentOffer.city}
-            offers={[currentOffer]}
+            offers={[currentOffer].concat(nearbyOffers.slice(0, cardOtherView))}
             type={MAP_TYPE.OFFERPAGE}
             activeOffer={currentOffer.id}
-            allowHover={false}
+            allowHover
           />
         </section>
         <OfferOther
