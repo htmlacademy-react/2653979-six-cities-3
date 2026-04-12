@@ -23,7 +23,7 @@ function Header(): JSX.Element {
   };
 
   useEffect(() => {
-    if (!isAuth && location.pathname === APP_ROUTE.Favorites) {
+    if (!isAuth && location.pathname === String(APP_ROUTE.Favorites)) {
       navigate(APP_ROUTE.Login, { replace: true });
     }
   }, [isAuth, location.pathname, navigate]);

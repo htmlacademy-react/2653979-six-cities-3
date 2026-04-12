@@ -20,7 +20,7 @@ function OfferOther({ cardOtherView, offers }: OfferOtherProps): JSX.Element {
               key={card.id}
               data={card}
               mode={CARD_MODE.VERTICAL}
-              isNear={true}
+              isNear
             />
           ))}
         </div>
