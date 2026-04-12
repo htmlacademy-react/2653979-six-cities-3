@@ -8,7 +8,7 @@ import { APP_ROUTE, MAP_TYPE, CARD_OTHER_VIEW } from '../../const';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getCurrentOffer, getIsCurrentOfferLoading, getNearbyOffers } from '../../store/selectors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from '../../components/spinner/spinner';
 import { fetchCurrentOfferAction, fetchNearbyOffersAction, fetchReviewsAction } from '../../store/api-actions';
 
@@ -34,8 +34,9 @@ function OfferPage(): JSX.Element {
   }
 
   if (!currentOffer) {
-    return <Navigate to={APP_ROUTE.Root} />;
+    return <Navigate to={APP_ROUTE.NotFound} />;
   }
+
   return (
     <div className="page">
       <Helmet>
@@ -52,10 +53,10 @@ function OfferPage(): JSX.Element {
           />
           <Map
             city={currentOffer.city}
-            offers={[currentOffer]}
+            offers={[currentOffer].concat(nearbyOffers.slice(0, cardOtherView))}
             type={MAP_TYPE.OFFERPAGE}
             activeOffer={currentOffer.id}
-            allowHover={false}
+            allowHover
           />
         </section>
         <OfferOther

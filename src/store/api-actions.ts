@@ -83,7 +83,7 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, {
   'data/fetchReviews',
   async (offerId, { extra: api }) => {
     const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${offerId}`);
-    return data;
+    return data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   },
 );
 
@@ -99,7 +99,7 @@ export const postReviewAction = createAsyncThunk<Review[], { offerId: string; re
       const url = `${APIRoute.Comments}/${offerId}`;
       await api.post<Review>(url, review);
       const { data } = await api.get<Review[]>(url);
-      return data;
+      return data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 400) {

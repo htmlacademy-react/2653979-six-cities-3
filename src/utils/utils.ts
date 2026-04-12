@@ -24,5 +24,5 @@ export function sortOffers(offers: Offer[], sortType: string): Offer[] {
 }
 
 export function convertRathingStars (rating: number): string {
-  return `${rating * 20 }%`;
+  return `${Math.round(rating * 20 / 10) * 10}%`;
 }

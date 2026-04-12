@@ -51,6 +51,7 @@ function FavoritesPage(): JSX.Element {
                             mode={CARD_MODE.HORIZONTAL}
                             key={offer.id}
                             data={offer}
+                            isNear={false}
                           />
                         ))}
                       </div>

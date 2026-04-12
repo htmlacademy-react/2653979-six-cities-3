@@ -1,18 +1,28 @@
 import { FormEvent, useRef, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { AuthData } from '../../types/auth-data';
 import { loginAction } from '../../store/api-actions';
-import { APP_ROUTE, AuthorizationStatus } from '../../const';
+import { APP_ROUTE, AuthorizationStatus, CITIES } from '../../const';
 import { getAuthorizationStatus } from '../../store/selectors';
+import { generateRandomNumber } from '../../utils/mocks';
+import { City } from '../../types/city';
+import { setCity } from '../../store/slice/app-data';
 
 function LoginPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const randomCity = CITIES[generateRandomNumber(0, CITIES.length - 1)];
+  const navigate = useNavigate();
+  const handleCityBind = (city: City) => {
+    dispatch(setCity(city));
+    navigate(APP_ROUTE.Root);
+  };
+
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [passwordError, setPasswordError] = useState('');
-  const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
@@ -112,8 +122,8 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
+              <a className="locations__item-link" onClick={() => handleCityBind(randomCity)}>
+                <span>{randomCity.name}</span>
               </a>
             </div>
           </section>

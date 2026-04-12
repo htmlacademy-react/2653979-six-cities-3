@@ -82,6 +82,7 @@ export enum APP_ROUTE {
   Favorites = '/favorites',
   Offer = '/offer/:id',
   Root = '/',
+  NotFound= '*',
 }
 
 export enum AuthorizationStatus {

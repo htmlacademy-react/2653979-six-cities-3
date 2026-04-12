@@ -31,6 +31,7 @@ function OfferList({ cardView, offers, onActiveCardToggle }: OfferListProps): JS
             mode={CARD_MODE.VERTICAL}
             onMouseEnter={() => onActiveCardToggle(card.id)}
             onMouseLeave={() => onActiveCardToggle(null)}
+            isNear={false}
           />
         ))
       }

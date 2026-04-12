@@ -11,11 +11,12 @@ type CardMode = typeof CARD_MODE[keyof typeof CARD_MODE];
 type OfferCardProps = {
   data: Offer;
   mode: CardMode;
+  isNear: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }
 
-function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.Element {
+function Card({ data, mode, isNear, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.Element {
   const { isPremium, rating, previewImage, price, isFavorite, type, title, id } = data;
   const ratingStars = convertRathingStars(rating);
   const modeClasses = {
@@ -35,7 +36,7 @@ function Card({ data, mode, onMouseEnter, onMouseLeave }: OfferCardProps): JSX.E
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   return (
-    <article className={`${`${cardMode}__card`} place-card`}
+    <article className={isNear ? 'near-places__card place-card' : `${`${cardMode}__card`} place-card`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       data-testid="card-container"
