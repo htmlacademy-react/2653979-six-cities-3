@@ -8,7 +8,7 @@ import { APP_ROUTE, MAP_TYPE, CARD_OTHER_VIEW } from '../../const';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getCurrentOffer, getIsCurrentOfferLoading, getNearbyOffers } from '../../store/selectors';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Spinner from '../../components/spinner/spinner';
 import { fetchCurrentOfferAction, fetchNearbyOffersAction, fetchReviewsAction } from '../../store/api-actions';
 
